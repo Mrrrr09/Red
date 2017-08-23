@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<title>Linea test 01</title>
+	<style type="text/css">
+		canvas{
+			background-color: #272822;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="canvas" width="1000px" height="500px"></canvas>
+	<script type="text/javascript">var num1;
+var num2;
+var nsd = [];
+var arr = [];
+var t =0;
+var g;
+var ni;
+var no;
+var dis1;
+var dis2;
+var ant1;
+var ant2;
+var min = 1000;
+var min2 = 1000;
+      document.addEventListener("DOMContentLoaded", init, false);
+
+      function init()
+      {
+        var canvas = document.getElementById("canvas");
+        canvas.addEventListener("mousedown", getPosition, false);
+      }
+
+      function getPosition(event)
+      {
+        var x = new Number();
+        var y = new Number();
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+        if (event.x != undefined && event.y != undefined)
+        {
+          x = event.x;
+          y = event.y;
+        }
+        else // Firefox method to get the position
+        {
+          x = event.clientX + document.body.scrollLeft +
+              document.documentElement.scrollLeft;
+          y = event.clientY + document.body.scrollTop +
+              document.documentElement.scrollTop;
+        }
+
+        x -= canvas.offsetLeft;
+        y -= canvas.offsetTop;
+        num1 = x;
+        num2 = y;
+        ctx.beginPath();
+        Ci();
+        ctx.strokeStyle = "white";
+        nsd[nsd.length] = x;
+        arr[arr.length] = y;
+        for (var i = nsd.length - 1; i >= 0; i--) {
+          ctx.moveTo(x, y);
+          dis1 = x - nsd[i];
+          dis2 = y - arr[i];
+          if (dis1 < ant1 && dis2 < ant2){
+            if (dis1 < min){
+              min = dis1;
+            }
+            if(dis2 < min2){
+              min2 = dis2;
+            }
+          }
+          ctx.lineTo(nsd[i], arr[i]);
+          ant1 = dis1;
+          ant2 = dis2;
+        }
+        if (min == 0 && min2 == 0){
+          min=min2=1000;
+        }
+        ctx.arc((min*-1),(min2*-1),10,0,2*Math.PI);
+        ctx.stroke();
+        //alert((min*-1) + " " + (min2*-1));
+    }
+    function Ci(){
+      var canvas = document.getElementById("canvas");
+      var ctx = canvas.getContext("2d");
+      ctx.arc(num1,num2,5,0,2*Math.PI);
+      t++;
+    }</script>
+	<h1 id="Ho"></h1>
+</body>
+</html>
